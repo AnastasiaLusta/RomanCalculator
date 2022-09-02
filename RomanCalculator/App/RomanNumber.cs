@@ -16,7 +16,7 @@ public class RomanNumber
         };
         var result = 0;
         var previous = 0;
-        
+
         foreach (var number in romanNumber)
         {
             var current = digits[number];
@@ -27,7 +27,7 @@ public class RomanNumber
             }
             else
             {
-                result+= digits[number];
+                result += digits[number];
             }
 
             previous = current;
