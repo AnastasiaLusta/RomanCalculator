@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RomanCalculator", "RomanCalculator\RomanCalculator.csproj", "{A67B542E-5909-46F4-8EF8-70D219D83F8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{7753C6D9-E4C5-4EB3-84BE-0FD4E22B1AFE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A67B542E-5909-46F4-8EF8-70D219D83F8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A67B542E-5909-46F4-8EF8-70D219D83F8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A67B542E-5909-46F4-8EF8-70D219D83F8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A67B542E-5909-46F4-8EF8-70D219D83F8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7753C6D9-E4C5-4EB3-84BE-0FD4E22B1AFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7753C6D9-E4C5-4EB3-84BE-0FD4E22B1AFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7753C6D9-E4C5-4EB3-84BE-0FD4E22B1AFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7753C6D9-E4C5-4EB3-84BE-0FD4E22B1AFE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
