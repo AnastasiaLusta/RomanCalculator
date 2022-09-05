@@ -22,6 +22,7 @@ public class RomanNumber
         {
             //get value of the current number
             var current = digits[number];
+            //check if the current number is bigger than the previous one
             if (current > previous)
             {
                 result -= previous;
