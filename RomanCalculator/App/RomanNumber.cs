@@ -4,6 +4,7 @@ public class RomanNumber
 {
     public static int Parse(string romanNumber)
     {
+        //dictionary with the roman numbers and their values
         var digits = new Dictionary<char, int>()
         {
             { 'I', 1 },
@@ -16,7 +17,7 @@ public class RomanNumber
         };
         var result = 0;
         var previous = 0;
-
+    
         foreach (var number in romanNumber)
         {
             var current = digits[number];
