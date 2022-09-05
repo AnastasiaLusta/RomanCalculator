@@ -20,7 +20,7 @@ public class RomanNumber
     
         foreach (var number in romanNumber)
         {
-            //get value of the current number
+            //get value of the number
             var current = digits[number];
             //check if the current number is bigger than the previous one
             if (current > previous)
