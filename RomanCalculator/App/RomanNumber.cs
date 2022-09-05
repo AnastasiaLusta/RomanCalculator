@@ -4,7 +4,7 @@ public class RomanNumber
 {
     public static int Parse(string romanNumber)
     {
-        //dictionary with the roman numbers and their values
+        //dictionary with the roman numbers and values
         var digits = new Dictionary<char, int>()
         {
             { 'I', 1 },
