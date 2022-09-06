@@ -4,3 +4,4 @@ using RomanCalculator.App;
 
 new Calc().Run();
 
+// Some comment
