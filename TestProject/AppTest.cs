@@ -31,4 +31,17 @@ public class AppTest
         Assert.AreEqual(0, RomanNumber.Parse("N"));
         // проверка на N
     }
+
+    [TestMethod]
+    public void RomanNumberParseDisallowN()
+    {
+        // Check if RomanNumber.Parse throws ArgumentException with "N" in argument string with more letters
+        var exc = Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("NM"));
+        exc = Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("MN"));
+        exc = Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("MNM"));
+
+        // Check if RomanNumber.Parse throws ArgumentException with message "N is not allowed in context"
+        var exp = new ArgumentException("N is not allowed in context");
+        Assert.AreEqual(exc.Message, exp.Message);
+    }
 }

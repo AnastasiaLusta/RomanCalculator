@@ -16,9 +16,15 @@ public class RomanNumber
             { 'D', 500 },
             { 'M', 1000 }
         };
+
         var result = 0;
         var previous = 0;
-    
+
+        // throw new ArgumentException of N is in the number with other letters
+        if (romanNumber.Contains("N") && romanNumber.Length > 1)
+            throw new ArgumentException("N is not allowed in context");
+
+
         foreach (var number in romanNumber)
         {
             //get value of the number
