@@ -6,6 +6,7 @@ public class AppTest
     [TestMethod]
     public void CalcTest()
     {
+        //test if calc creates a new instance of the calculator
         Calc calc = new();
         Assert.IsNotNull(calc);
     }
@@ -13,6 +14,7 @@ public class AppTest
     [TestMethod]
     public void RomanNumberParseTest()
     {
+        //test for parsing any roman number
         Assert.AreEqual(RomanNumber.Parse("I"), 1, "I == 1");
         Assert.AreEqual(RomanNumber.Parse("IV"), 4, "IV == 4");
         Assert.AreEqual(RomanNumber.Parse("XV"), 15);
@@ -28,8 +30,8 @@ public class AppTest
     [TestMethod]
     public void RomanNumberParseAllowN()
     {
+        //check if it returns 0 when N is found
         Assert.AreEqual(0, RomanNumber.Parse("N"));
-        // �������� �� N
     }
 
     [TestMethod]
