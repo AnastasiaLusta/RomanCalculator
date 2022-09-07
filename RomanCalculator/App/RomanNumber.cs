@@ -17,9 +17,27 @@ public class RomanNumber
         };
         var result = 0;
         var previous = 0;
-    
+        if (romanNumber == null || romanNumber == "")
+        {
+            throw new ArgumentNullException("Empty string not allowed");
+        }
+
+        if (romanNumber == "N")
+        {
+            return 0;
+        }
+        
+        if (romanNumber.Contains("N") && romanNumber.Length > 1)
+        {
+            throw new ArgumentException("N is not allowed");
+        }
+        
         foreach (var number in romanNumber)
         {
+            if (!digits.ContainsKey(number))
+            {
+                throw new ArgumentException($"Invalid char {number}");
+            }
             //get value of the number
             var current = digits[number];
             //check if the current number is bigger than the previous one
