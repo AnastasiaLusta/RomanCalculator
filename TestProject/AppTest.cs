@@ -24,4 +24,11 @@ public class AppTest
         Assert.AreEqual(RomanNumber.Parse("LV"), 55);
         Assert.AreEqual(RomanNumber.Parse("XL"), 40);
     }
+
+    [TestMethod]
+    public void RomanNumberParseAllowN()
+    {
+        Assert.AreEqual(0, RomanNumber.Parse("N"));
+        // проверка на N
+    }
 }

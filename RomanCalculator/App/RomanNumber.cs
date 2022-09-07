@@ -7,6 +7,7 @@ public class RomanNumber
         //dictionary with the roman numbers and values
         var digits = new Dictionary<char, int>()
         {
+             { 'N', 0 },
             { 'I', 1 },
             { 'V', 5 },
             { 'X', 10 },
