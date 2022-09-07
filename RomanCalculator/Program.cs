@@ -2,6 +2,10 @@
 
 using RomanCalculator.App;
 
+new Calc().Run();
+//hello world
+// Some comment
+//another comment
 //new Calc().Run();
 
 Console.WriteLine(RomanCalculator.App.RomanNumber.Parse("N"));
