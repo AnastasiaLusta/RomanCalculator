@@ -32,12 +32,14 @@ public class RomanNumber
             throw new ArgumentException("N is not allowed");
         }
         
+
+        // throw new ArgumentException of N is in the number with other letters
+        if (romanNumber.Contains("N") && romanNumber.Length > 1)
+            throw new ArgumentException("N is not allowed in context");
+
+
         foreach (var number in romanNumber)
         {
-            if (!digits.ContainsKey(number))
-            {
-                throw new ArgumentException($"Invalid char {number}");
-            }
             //get value of the number
             var current = digits[number];
             //check if the current number is bigger than the previous one
