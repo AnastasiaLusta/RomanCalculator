@@ -178,4 +178,14 @@ public class AppTest
         Assert.IsTrue(rn1 != rn4);       // rn1 и rn4 - разные объекты
 
     }
+
+    [TestMethod]
+    public void RomanNumberNegativeParsing()
+    {
+        Assert.AreEqual(-10, RomanNumber.Parse("-X"));
+        Assert.AreEqual(-1999, RomanNumber.Parse("-MCMXCIX"));
+        Assert.AreEqual(-900, RomanNumber.Parse("-CM"));
+        Assert.AreEqual(-400, RomanNumber.Parse("-CD"));
+        // testing of negative parsing
+    }
 }
