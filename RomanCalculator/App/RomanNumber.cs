@@ -28,6 +28,7 @@ public record RomanNumber
             { 'D', 500 },
             { 'M', 1000 }
         };
+        var negative = false;
         var result = 0;
         var previous = 0;
         if (romanNumber == null || romanNumber == "")
@@ -47,12 +48,16 @@ public record RomanNumber
         }
         
         //checks if it contains -
-        var negative = romanNumber.Contains("-");
         
         foreach (var number in romanNumber)
         {
             if (!digits.ContainsKey(number))
             {
+                if (number == '-')
+                {
+                    negative = true;
+                    continue;
+                }
                 throw new ArgumentException($"Invalid char {number}");
             }
             
@@ -77,7 +82,7 @@ public record RomanNumber
         {
             result = result * -1;
         }
-
+        
         return result;
     }
 
@@ -106,6 +111,12 @@ public record RomanNumber
                 { 4, "IV" },
                 { 1, "I" }
             };
+            
+            if (num<0)
+            {
+                res += "-";
+                num = num * -1;
+            }
 
             foreach (var digit in digits)
             {

@@ -192,6 +192,7 @@ public class AppTest
     [TestMethod]
     public void RomanNumberNegativeToString()
     {
+        //test negative number
         RomanNumber romanNumber = new RomanNumber();
         Assert.AreEqual("N", romanNumber.ToString());
 
