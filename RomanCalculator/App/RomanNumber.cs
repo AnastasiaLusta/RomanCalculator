@@ -46,6 +46,8 @@ public record RomanNumber
             throw new ArgumentException("N is not allowed");
         }
         
+        //checks if it contains -
+        var negative = romanNumber.Contains("-");
         
         foreach (var number in romanNumber)
         {
@@ -68,6 +70,12 @@ public record RomanNumber
             }
 
             previous = current;
+        }
+        
+        //changes the result to negative if it contains -
+        if (negative)
+        {
+            result = result * -1;
         }
 
         return result;
