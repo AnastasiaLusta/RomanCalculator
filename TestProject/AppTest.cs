@@ -209,3 +209,64 @@ public class AppTest
         Assert.AreEqual("-MCMXCIX", romanNumber.ToString());
     }
 }
+
+[TestClass]
+public class RomanNumberOperationTest
+{
+    [TestMethod]
+    public void RomanNumberAddTest()
+    {
+        //test addition for different combinations of types (RomanNumber, int, string)
+        Assert.AreEqual(10, RomanNumber.Add("V", "V").Value);
+        Assert.AreEqual(20, RomanNumber.Add("X", "X").Value);
+        Assert.AreEqual(30, RomanNumber.Add("XX", "X").Value);
+        Assert.AreEqual(40, RomanNumber.Add("XX", "XX").Value);
+        Assert.AreEqual(50, RomanNumber.Add("XX", "XXX").Value);
+        Assert.AreEqual(0, RomanNumber.Add("-XXX", "XXX").Value);
+        Assert.AreEqual(0, RomanNumber.Add("XXX", "-XXX").Value);
+        Assert.AreEqual(-60, RomanNumber.Add("-XXX", "-XXX").Value);
+        Assert.AreEqual(60, RomanNumber.Add("XXX", "XXX").Value);
+        Assert.AreEqual("III", RomanNumber.Add("I", "II").ToString());
+
+        Assert.AreEqual(20, RomanNumber.Add(10,10).Value);
+        Assert.AreEqual(100, RomanNumber.Add(90,10).Value);
+        
+        Assert.AreEqual(20, RomanNumber.Add(10,10).Value);
+
+        RomanNumber rn5  = RomanNumber.Add(2, 3);
+        RomanNumber rn8  = RomanNumber.Add(rn5, 3);
+        RomanNumber rn10 = RomanNumber.Add("I", "IX");
+        RomanNumber rn9  = RomanNumber.Add(rn5, "IV");
+        RomanNumber rn13 = RomanNumber.Add(rn5, rn8);
+        //check for exceptions using different combinations of types (RomanNumber, int, string)
+        //check how it behaves if there mistakes in strings or nulls
+        Assert.ThrowsException<ArgumentException>(() => RomanNumber.Add("X", "X X"));
+        Assert.ThrowsException<ArgumentException>(() => RomanNumber.Add("X", "Xx"));
+        Assert.ThrowsException<ArgumentNullException>(()=> RomanNumber.Add((string)null!, "X"));
+        Assert.ThrowsException<ArgumentNullException>(()=> RomanNumber.Add("X", (string)null!));
+        Assert.ThrowsException<ArgumentNullException>(()=> RomanNumber.Add((RomanNumber)null!, "X"));
+        Assert.ThrowsException<ArgumentNullException>(()=> RomanNumber.Add("X", (RomanNumber)null!));
+        Assert.ThrowsException<ArgumentNullException>(()=> RomanNumber.Add((RomanNumber)null!, (RomanNumber)null!));
+        Assert.ThrowsException<ArgumentNullException>(()=> RomanNumber.Add((string)null!, (string)null!));
+        Assert.ThrowsException<ArgumentNullException>(()=> RomanNumber.Add((string)null!, (RomanNumber)null!));
+        Assert.ThrowsException<ArgumentNullException>(()=> RomanNumber.Add((RomanNumber)null!, (string)null!));
+
+    }
+
+    [TestMethod]
+    public void AddTest()
+    {
+        //test addition for different combinations of types (RomanNumber, int, string)
+        var rn = new RomanNumber(10);
+        Assert.AreEqual(20,    rn.Add(10).Value);
+        Assert.AreEqual(30,    rn.Add("XX").Value);
+        Assert.AreEqual("V",   rn.Add(-5).ToString());
+        Assert.AreEqual("-XL", rn.Add("-L").ToString());
+        //check for exceptions using different combinations of types (RomanNumber, int, string) and nulls
+        Assert.ThrowsException<ArgumentException>(()=> rn.Add(""));
+        Assert.ThrowsException<ArgumentException>(() => rn.Add("-"));
+        Assert.ThrowsException<ArgumentException>(() => rn.Add("10"));
+        Assert.ThrowsException<ArgumentNullException>(() => rn.Add((String)null!));
+        Assert.ThrowsException<ArgumentNullException>(() => rn.Add((RomanNumber)null!));
+    }
+}

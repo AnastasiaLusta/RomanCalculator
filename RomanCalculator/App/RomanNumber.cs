@@ -47,8 +47,7 @@ public record RomanNumber
             throw new ArgumentException("N is not allowed");
         }
         
-        //checks if it contains -
-        
+        //checks if it contains 
         foreach (var number in romanNumber)
         {
             if (!digits.ContainsKey(number))
@@ -128,5 +127,116 @@ public record RomanNumber
             }
 
             return res;
+        }
+        //overloading for string and string
+        public static RomanNumber Add(string a, string b)
+        {
+            if (a is null || b is null)
+            {
+                throw new ArgumentNullException("Empty string not allowed");
+            }
+            var result = Parse(a) + Parse(b);
+            return new RomanNumber(result);
+        }
+        //overloading for int and int
+        public static RomanNumber Add(int a, int b)
+        {
+            return new RomanNumber(a + b);
+        }
+        //overloading for RomanNumber and RomanNumber objects
+        public static RomanNumber Add(RomanNumber a, RomanNumber b)
+        {
+            if (a is null || b is null)
+            {
+                throw new ArgumentNullException("Empty string not allowed");
+            }
+            return new RomanNumber(a.Value + b.Value);
+        }
+        //overloading for RomanNumber object and string
+        public static RomanNumber Add(RomanNumber a, string b)
+        {
+            if (a is null || b is null)
+            {
+                throw new ArgumentNullException("Empty string not allowed");
+            }
+            return new RomanNumber(a.Value + Parse(b));
+        }
+        //overloading for string and RomanNumber object
+        public static RomanNumber Add(string a, RomanNumber b)
+        {
+            if (a is null || b is null)
+            {
+                throw new ArgumentNullException("Empty string not allowed");
+            }
+            
+            return new RomanNumber(Parse(a) + b.Value);
+        }
+        //overloading for RomanNumber object and int
+        public static RomanNumber Add(RomanNumber a, int b)
+        {
+            if (a is null)
+            {
+                throw new ArgumentNullException("Empty string not allowed");
+            }
+            return new RomanNumber(a.Value + b);
+        }
+        //overloading for int and RomanNumber object
+        public static RomanNumber Add(int a, RomanNumber b)
+        {
+            if (b is null)
+            {
+                throw new ArgumentNullException("Empty string not allowed");
+            }
+            return new RomanNumber(a + b.Value);
+        }
+        //overloading for string and int
+        public static RomanNumber Add(string a, int b)
+        {
+            if (a is null)
+            {
+                throw new ArgumentNullException("Empty string not allowed");
+            }
+            return new RomanNumber(Parse(a) + b);
+        }
+        //overloading for int and string
+        public static RomanNumber Add(int a, string b)
+        {
+            if (b is null)
+            {
+                throw new ArgumentNullException("Empty string not allowed");
+            }
+            return new RomanNumber(a + Parse(b));
+        }
+        //overloading for RomanNumber object and int (not static)
+        public RomanNumber Add(int other)
+        {
+            return new RomanNumber(this._value + other);
+        }
+        
+        //overloading for RomanNumber object and string (not static)
+        public RomanNumber Add(string other)
+        {
+            if (other == "-" && other.Length == 1)
+            {
+                throw new ArgumentException("N is not allowed");
+            }
+            if (String.Empty == other)
+            {
+                throw new ArgumentException("Empty string not allowed");
+            }
+            if (other is null)
+            {
+                throw new ArgumentNullException("Empty string not allowed");
+            }
+            return new RomanNumber(this._value + Parse(other));
+        }
+        //overloading for RomanNumber object and RomanNumber object (not static)
+        public RomanNumber Add(RomanNumber a)
+        {
+            if (a is null)
+            {
+                throw new ArgumentNullException("Empty string not allowed");
+            }
+            return new RomanNumber(this._value + a.Value);
         }
 }
