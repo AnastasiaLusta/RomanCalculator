@@ -3,11 +3,16 @@ namespace RomanCalculator.App;
 [TestClass]
 public class AppTest
 {
+    private Resources Resources { get; set; } = new();
+    public AppTest()
+    {
+        RomanNumber.Resources = Resources;
+    }
     [TestMethod]
     public void CalcTest()
     {
         //test if calc creates a new instance of the calculator
-        Calc calc = new();
+        Calc calc = new(Resources);
         Assert.IsNotNull(calc);
     }
 
@@ -106,18 +111,18 @@ public class AppTest
     {
         //test for invalid digits
         var exc = Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("A"));
-        var exp = new ArgumentException("Invalid char A");
+        var exp = new ArgumentException(Resources.GetInvalidCharMessage('A'));
         Assert.AreEqual(exp.Message, exc.Message);
         var exc2 = Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("JJ"));
-        var exp2 = new ArgumentException("Invalid char J");
+        var exp2 = new ArgumentException(Resources.GetInvalidCharMessage('J'));
         Assert.AreEqual(exp2.Message, exc2.Message);
         var exc3 = Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("QQQ"));
-        var exp3 = new ArgumentException("Invalid char Q");
+        var exp3 = new ArgumentException(Resources.GetInvalidCharMessage('Q'));
         Assert.AreEqual(exp3.Message, exc3.Message);
 
-        //check if it starts with a specific message
-        Assert.IsTrue(Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("X X")).Message
-            .StartsWith("Invalid char"));
+        // check if it starts with a specific message
+        Assert.IsTrue(Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("1X X1")).Message
+            .StartsWith(Resources.GetInvalidCharMessage('1')));
     }
 
     [TestMethod]
@@ -127,7 +132,7 @@ public class AppTest
         var exc = Assert.ThrowsException<ArgumentNullException>(() => RomanNumber.Parse(""));
 
         //expected result and check if it equals to the actual result
-        var exp = new ArgumentNullException("Empty string not allowed");
+        var exp = new ArgumentNullException(Resources.GetEmptyStringMessage());
         Assert.AreEqual(exc.Message, exp.Message);
 
         // test if it throws an exception
@@ -246,7 +251,6 @@ public class RomanNumberOperationTest
         Assert.ThrowsException<ArgumentNullException>(()=> RomanNumber.Add("X", (string)null!));
         Assert.ThrowsException<ArgumentNullException>(()=> RomanNumber.Add((RomanNumber)null!, "X"));
         Assert.ThrowsException<ArgumentNullException>(()=> RomanNumber.Add("X", (RomanNumber)null!));
-        Assert.ThrowsException<ArgumentNullException>(()=> RomanNumber.Add((RomanNumber)null!, (RomanNumber)null!));
         Assert.ThrowsException<ArgumentNullException>(()=> RomanNumber.Add((string)null!, (string)null!));
         Assert.ThrowsException<ArgumentNullException>(()=> RomanNumber.Add((string)null!, (RomanNumber)null!));
         Assert.ThrowsException<ArgumentNullException>(()=> RomanNumber.Add((RomanNumber)null!, (string)null!));

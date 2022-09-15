@@ -1,12 +1,7 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using RomanCalculator.App;
 
-using RomanCalculator.App;
+RomanNumber.Resources = new Resources();
 
-new Calc().Run();
-//hello world
-// Some comment
-//another comment
-//new Calc().Run();
+var calc = new Calc(RomanNumber.Resources); // DI for culture (language of UI)
 
-Console.WriteLine(RomanCalculator.App.RomanNumber.Parse("N"));
-
+calc.Run(); // runs the calculator of Roman numbers
