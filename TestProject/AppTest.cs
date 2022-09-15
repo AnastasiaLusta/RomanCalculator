@@ -11,7 +11,7 @@ public class AppTest
     [TestMethod]
     public void CalcTest()
     {
-        //test if calc creates a new instance of the calculator
+        // test if calc creates a new instance of the calculator
         Calc calc = new(Resources);
         Assert.IsNotNull(calc);
     }
@@ -30,7 +30,7 @@ public class AppTest
     [TestMethod]
     public void RomanNumberParseTest()
     {
-        //test for parsing any roman number
+        // test for parsing any roman number
         Assert.AreEqual(RomanNumber.Parse("I"), 1, "I == 1");
         Assert.AreEqual(RomanNumber.Parse("IV"), 4, "IV == 4");
         Assert.AreEqual(RomanNumber.Parse("XV"), 15);
@@ -53,13 +53,13 @@ public class AppTest
     [TestMethod]
     public void RomanNumberParseDisallowN()
     {
-        // Check if RomanNumber.Parse throws ArgumentException with "N" in argument string with more letters
+        // check if RomanNumber.Parse throws ArgumentException with "N" in argument string with more letters
         var exc = Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("NM"));
         exc = Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("MN"));
         exc = Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("MNM"));
 
-        // Check if RomanNumber.Parse throws ArgumentException with message "N is not allowed in context"
-        var exp = new ArgumentException("N is not allowed");
+        // check if RomanNumber.Parse throws ArgumentException with message "N is not allowed in context"
+        var exp = new ArgumentException(Resources.GetMispalcedNMessage());
         Assert.AreEqual(exc.Message, exp.Message);
     }
 
@@ -85,7 +85,7 @@ public class AppTest
     [TestMethod]
     public void RomanNumberParserCrossTest()
     {
-        //test if the parser and the toString method are working together
+        // test if the parser and the toString method are working together
         RomanNumber romanNumber = new();
         for (int n = 1; n < 2022; n++)
         {
@@ -96,7 +96,7 @@ public class AppTest
 
     public void RomanNumberParse1Digit()
     {
-        //test parser with 1 digit
+        // test parser with 1 digit
         Assert.AreEqual(1, RomanNumber.Parse("I"));
         Assert.AreEqual(5, RomanNumber.Parse("V"));
         Assert.AreEqual(10, RomanNumber.Parse("X"));
@@ -109,7 +109,7 @@ public class AppTest
     [TestMethod]
     public void RomanNumberInvalidDigit()
     {
-        //test for invalid digits
+        // test for invalid digits
         var exc = Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("A"));
         var exp = new ArgumentException(Resources.GetInvalidCharMessage('A'));
         Assert.AreEqual(exp.Message, exc.Message);
@@ -128,10 +128,10 @@ public class AppTest
     [TestMethod]
     public void RomanNumberParseEmpty()
     {
-        //test for empty string
+        // test for empty string
         var exc = Assert.ThrowsException<ArgumentNullException>(() => RomanNumber.Parse(""));
 
-        //expected result and check if it equals to the actual result
+        // expected result and check if it equals to the actual result
         var exp = new ArgumentNullException(Resources.GetEmptyStringMessage());
         Assert.AreEqual(exc.Message, exp.Message);
 
@@ -142,7 +142,7 @@ public class AppTest
     [TestMethod]
     public void RomanNumberParse2Digits()
     {
-        //test parser with 2 digits
+        // test parser with 2 digits
         Assert.AreEqual(4, RomanNumber.Parse("IV"));
         Assert.AreEqual(15, RomanNumber.Parse("XV"));
         Assert.AreEqual(900, RomanNumber.Parse("CM"));
@@ -155,7 +155,7 @@ public class AppTest
     [TestMethod]
     public void RomanNumberParse3MoreDigits()
     {
-        //test parser with 3 or more digits
+        // test parser with 3 or more digits
         Assert.AreEqual(30, RomanNumber.Parse("XXX"));
         Assert.AreEqual(401, RomanNumber.Parse("CDI"));
         Assert.AreEqual(1999, RomanNumber.Parse("MCMXCIX"));
@@ -164,23 +164,21 @@ public class AppTest
     [TestMethod]
     public void RomanNumberTypeTest()
     {
-        /* Задача: написать тесты, которые будут пройдены только
-         * если RomanNumber - ссылочный тип
-         */
+       
         RomanNumber rn1 = new() { Value = 10 };
         RomanNumber rn2 = rn1;
-        Assert.AreSame(rn1, rn2);        // rn1, rn2 - ссылки на один объект
+        Assert.AreSame(rn1, rn2);       
             
-        RomanNumber rn3 = rn1 with { };  // клонирование
-        Assert.AreNotSame(rn3, rn1);     // проверка клонирования - объекты разные
-        Assert.AreEqual(rn3, rn1);       // не одинаковые, но равные
-        Assert.IsTrue(rn1 == rn3);       //
+        RomanNumber rn3 = rn1 with { };  
+        Assert.AreNotSame(rn3, rn1);  
+        Assert.AreEqual(rn3, rn1);       
+        Assert.IsTrue(rn1 == rn3);      
 
         RomanNumber rn4 = rn1 with { Value = 20 };
         
-        Assert.AreNotEqual(rn4, rn1);    // rn4 - другой объект
-        Assert.IsFalse(rn1 == rn4);      // rn1 и rn4 - разные объекты
-        Assert.IsTrue(rn1 != rn4);       // rn1 и rn4 - разные объекты
+        Assert.AreNotEqual(rn4, rn1);    
+        Assert.IsFalse(rn1 == rn4);      
+        Assert.IsTrue(rn1 != rn4);      
 
     }
 
@@ -197,7 +195,7 @@ public class AppTest
     [TestMethod]
     public void RomanNumberNegativeToString()
     {
-        //test negative number
+        // test negative number
         RomanNumber romanNumber = new RomanNumber();
         Assert.AreEqual("N", romanNumber.ToString());
 
@@ -221,7 +219,7 @@ public class RomanNumberOperationTest
     [TestMethod]
     public void RomanNumberAddTest()
     {
-        //test addition for different combinations of types (RomanNumber, int, string)
+        // test addition for different combinations of types (RomanNumber, int, string)
         Assert.AreEqual(10, RomanNumber.Add("V", "V").Value);
         Assert.AreEqual(20, RomanNumber.Add("X", "X").Value);
         Assert.AreEqual(30, RomanNumber.Add("XX", "X").Value);
@@ -243,8 +241,8 @@ public class RomanNumberOperationTest
         RomanNumber rn10 = RomanNumber.Add("I", "IX");
         RomanNumber rn9  = RomanNumber.Add(rn5, "IV");
         RomanNumber rn13 = RomanNumber.Add(rn5, rn8);
-        //check for exceptions using different combinations of types (RomanNumber, int, string)
-        //check how it behaves if there mistakes in strings or nulls
+        // check for exceptions using different combinations of types (RomanNumber, int, string)
+        // check how it behaves if there mistakes in strings or nulls
         Assert.ThrowsException<ArgumentException>(() => RomanNumber.Add("X", "X X"));
         Assert.ThrowsException<ArgumentException>(() => RomanNumber.Add("X", "Xx"));
         Assert.ThrowsException<ArgumentNullException>(()=> RomanNumber.Add((string)null!, "X"));
@@ -260,13 +258,13 @@ public class RomanNumberOperationTest
     [TestMethod]
     public void AddTest()
     {
-        //test addition for different combinations of types (RomanNumber, int, string)
+        // test addition for different combinations of types (RomanNumber, int, string)
         var rn = new RomanNumber(10);
         Assert.AreEqual(20,    rn.Add(10).Value);
         Assert.AreEqual(30,    rn.Add("XX").Value);
         Assert.AreEqual("V",   rn.Add(-5).ToString());
         Assert.AreEqual("-XL", rn.Add("-L").ToString());
-        //check for exceptions using different combinations of types (RomanNumber, int, string) and nulls
+        // check for exceptions using different combinations of types (RomanNumber, int, string) and nulls
         Assert.ThrowsException<ArgumentException>(()=> rn.Add(""));
         Assert.ThrowsException<ArgumentException>(() => rn.Add("-"));
         Assert.ThrowsException<ArgumentException>(() => rn.Add("10"));
