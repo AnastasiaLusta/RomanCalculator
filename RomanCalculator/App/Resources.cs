@@ -4,7 +4,7 @@ public class Resources
 {
     public string Culture { get; set; } = "uk-UA";
 
-    public string GetEmptyStringMessage(string? culture = null) // message for empty string exception
+    public string GetEmptyStringMessage(string culture = null) // message for empty string exception
         => (culture ?? Culture) switch
         {
             "uk-UA" => "Порожній рядок неприпустимий",
@@ -12,33 +12,33 @@ public class Resources
             _ => throw new Exception()
         };
 
-    public string GetInvalidCharMessage(char c, string? culture = null) // message for invalid char exception
+    public string GetInvalidCharMessage(char c, string culture = null) // message for invalid char exception
         => (culture ?? Culture) switch
         {
             "uk-UA" => $"Недозволений символ '{c}'",
             "en-US" => $"Invalid char '{c}'",
-            _ => throw new Exception("Unupported culture")
+            _ => throw new Exception("Unsupported culture")
         };
 
     public string
-        GetInvalidTypeMessage(int objNumber, string type, string? culture = null) // message for invalid type exception
+        GetInvalidTypeMessage(string type, string culture = null) // message for invalid type exception
         => (culture ?? Culture) switch
         {
-            "uk-UA" => $"obj{objNumber}: тип '{type}' не підтримується",
-            "en-US" => $"obj{objNumber}: type '{type}' unsupported",
-            _ => throw new Exception("Unupported culture")
+            "uk-UA" => $"Тип '{type}' не підтримується",
+            "en-US" => $"Type '{type}' unsupported",
+            _ => throw new Exception("Unsupported culture")
         };
 
-    public string GetMispalcedNMessage(string? culture = null) // message for misplaced N exception
+    public string GetMispalcedNMessage(string culture = null) // message for misplaced N exception
         => (culture ?? Culture) switch
         {
             "uk-UA" => "'N' не дозволяється у даному контексті",
             "en-US" => "'N' is not allowed in this context",
-            _ => throw new Exception("Unupported culture")
+            _ => throw new Exception("Unsupported culture")
         };
 
 
-    public string GetEnterNumberMessage(string? culture = null) // message for user to enter number
+    public string GetEnterNumberMessage(string culture = null) // message for user to enter number
         => (culture ?? Culture) switch
         {
             "uk-UA" => "Введiть число: ",
@@ -46,7 +46,7 @@ public class Resources
             _ => throw new Exception("Unsupported culture"),
         };
     
-    public string GetInvalidNumberMessage(string? culture = null) // message for invalid number exception
+    public string GetInvalidNumberMessage(string culture = null) // message for invalid number exception
         => (culture ?? Culture) switch
         {
             "uk-UA" => "Неприпустиме число",
@@ -54,7 +54,7 @@ public class Resources
             _ => throw new Exception("Unsupported culture"),
         };
 
-    public string GetEnterOperationMessage(string? culture = null) //message for user to enter operation
+    public string GetEnterOperationMessage(string culture = null) //message for user to enter operation
         => (culture ?? Culture) switch
         {
             "uk-UA" => "Введiть операцiю: ",
@@ -62,7 +62,7 @@ public class Resources
             _ => throw new Exception("Unsupported culture"),
         };
 
-    public string GetInvalidOperationMessage(string? culture = null)
+    public string GetInvalidOperationMessage(string culture = null)
         => (culture ?? Culture) switch
         {
             "uk-UA" => "Недопустима операцiя",
@@ -70,7 +70,7 @@ public class Resources
             _ => throw new Exception("Unsupported culture"),
         };
 
-    public string GetResultMessage(RomanNumber res, string? culture = null) // message for result
+    public string GetResultMessage(RomanNumber res, string culture = null) // message for result
         => (culture ?? Culture) switch
         {
             "uk-UA" => $"Результат: {res}",
@@ -78,7 +78,7 @@ public class Resources
             _ => throw new Exception("Unsupported culture"),
         };
 
-    public string GetWelcomeMessage(string? culture = null) // message for welcome
+    public string GetWelcomeMessage(string culture = null) // message for welcome
         => (culture ?? Culture) switch
         {
             "uk-UA" => "Вас вiтає калькулятор римських чисел",
@@ -86,7 +86,7 @@ public class Resources
             _ => throw new Exception("Unsupported culture"),
         };
 
-    public string GetCultureMessage(string? culture = null) // message for culture
+    public string GetCultureMessage(string culture = null) // message for culture
         => (culture ?? Culture) switch
         {
             "uk-UA" => "Введiть мову: ",
@@ -94,7 +94,7 @@ public class Resources
             _ => throw new Exception("Unsupported culture"),
         };
 
-    public string GetInvalidCultureMessage(string? culture = null) // message for invalid culture
+    public string GetInvalidCultureMessage(string culture = null) // message for invalid culture
         => (culture ?? Culture) switch
         {
             "uk-UA" => "Недозволена мова",

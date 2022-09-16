@@ -131,6 +131,16 @@ public record RomanNumber
 
         return res;
     }
+
+    private RomanNumber(object obj)
+    {
+         if (obj is null)
+                throw new ArgumentNullException(Resources.GetInvalidTypeMessage(obj.GetType().Name));
+            if (obj is int val) obj = new RomanNumber(val);
+            else if (obj is string str) obj = new RomanNumber(Parse(str));
+            else if (obj is RomanNumber rn) obj = rn;
+            else throw new ArgumentException(Resources.GetInvalidTypeMessage(obj.GetType().Name));
+    }
     
     // overloading for RomanNumber object and int (not static)
     public static RomanNumber Add(object obj1, object obj2) // fabrice method Add for all types 
@@ -140,14 +150,7 @@ public record RomanNumber
         var res = new RomanNumber(0);
         for (int i = 0; i < 2; i++)
         {
-            if (pars[i] is null)
-                throw new ArgumentNullException(Resources.GetInvalidTypeMessage(i + 1, pars[i].GetType().Name));
-            if (pars[i] is int val) rns[i] = new RomanNumber(val);
-            else if (pars[i] is string str) rns[i] = new RomanNumber(Parse(str));
-            else if (pars[i] is RomanNumber rn) rns[i] = rn;
-            else throw new ArgumentException(Resources.GetInvalidTypeMessage(i + 1, pars[i].GetType().Name));
-
-            res = res.Add(rns[i]);
+            res = res.Add(new RomanNumber(pars[i]));
         }
 
         return res;
