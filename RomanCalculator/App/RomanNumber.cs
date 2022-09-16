@@ -2,14 +2,14 @@ namespace RomanCalculator.App;
 
 public record RomanNumber
 {
-    private const char ZERO_DIGIT = 'N';
+    private const char ZeroDigit = 'N';
     private int _value;
     public static Resources Resources { get; set; } = null!;
 
     public int Value
     {
-        get { return _value; }
-        set { _value = value; }
+        get => _value;
+        set => _value = value;
     }
 
     public RomanNumber(int v = 0)
@@ -33,18 +33,18 @@ public record RomanNumber
         var negative = false;
         var result = 0;
         var previous = 0;
-        if (romanNumber == null || romanNumber == "")
+        if (string.IsNullOrEmpty(romanNumber))
         {
             throw new ArgumentNullException(Resources.GetEmptyStringMessage());
         }
 
-        if (romanNumber == ZERO_DIGIT.ToString())
+        if (romanNumber == ZeroDigit.ToString())
         {
             return 0;
         }
 
         // throw new ArgumentException of N is in the number with other letters
-        if (romanNumber.Contains(ZERO_DIGIT) && romanNumber.Length > 1)
+        if (romanNumber.Contains(ZeroDigit) && romanNumber.Length > 1)
         {
             throw new ArgumentException(Resources.GetMispalcedNMessage());
         }
@@ -92,7 +92,7 @@ public record RomanNumber
     {
         if (_value == 0)
         {
-            return ZERO_DIGIT.ToString();
+            return ZeroDigit.ToString();
         }
 
         var num = _value;
@@ -134,28 +134,19 @@ public record RomanNumber
 
     private RomanNumber(object obj)
     {
-         if (obj is null)
-                throw new ArgumentNullException(Resources.GetInvalidTypeMessage(obj.GetType().Name));
-            if (obj is int val) obj = new RomanNumber(val);
-            else if (obj is string str) obj = new RomanNumber(Parse(str));
-            else if (obj is RomanNumber rn) obj = rn;
-            else throw new ArgumentException(Resources.GetInvalidTypeMessage(obj.GetType().Name));
+        if (obj is null)
+            throw new ArgumentNullException(Resources.GetInvalidTypeMessage(nameof(obj)));
+        if (obj is int val) Value = val;
+        else if (obj is string str) Value = Parse(str);
+        else if (obj is RomanNumber rn) Value = rn.Value;
+        else throw new ArgumentException(Resources.GetInvalidTypeMessage(obj.GetType().Name));
     }
-    
+
     // overloading for RomanNumber object and int (not static)
     public static RomanNumber Add(object obj1, object obj2) // fabrice method Add for all types 
-    {
-        var rns = new RomanNumber[] { null!, null! };
-        var pars = new object[] { obj1, obj2 };
-        var res = new RomanNumber(0);
-        for (int i = 0; i < 2; i++)
-        {
-            res = res.Add(new RomanNumber(pars[i]));
-        }
+        => new RomanNumber(obj1).Add(new RomanNumber(obj2));
 
-        return res;
-    }
-    
+
     public RomanNumber Add(int other) // Add method overloading for int (not static)
         => new RomanNumber(Value + other);
 
@@ -217,4 +208,6 @@ public record RomanNumber
         => (num1 is null)
             ? throw new ArgumentNullException()
             : new RomanNumber(new RomanNumber(RomanNumber.Parse(num1)).Add(new RomanNumber(num2)));
+    
+    
 }
