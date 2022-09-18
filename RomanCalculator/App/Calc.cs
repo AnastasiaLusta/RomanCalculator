@@ -1,9 +1,10 @@
+using System.Linq.Expressions;
+
 namespace RomanCalculator.App;
 
 public class Calc
 {
     private readonly Resources _resources; // DI
-
     public Calc(Resources resources)
         => _resources = resources;
     /// <summary>
@@ -13,38 +14,47 @@ public class Calc
     {
         Console.WriteLine(_resources.GetWelcomeMessage());
         SelectCulture();
-        var rns = InputNumbers();
-        Calculate(rns[0], rns[1]);
+        RomanNumber res = null;
+        do
+        {
+            Console.WriteLine(_resources.GetEnterNumberMessage());
+            string userInput = Console.ReadLine() ?? "";
+            try
+            {
+                res = EvalExpression(userInput);
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        } while (res is null);
+        
+        Console.WriteLine(_resources.GetResultMessage(res));
     }
+
     /// <summary>
     /// Inputs two numbers from the console
     /// </summary>
     /// <returns>The array of Roman numbers</returns>
-    private RomanNumber[] InputNumbers()
+    public RomanNumber EvalExpression(string expression)
     {
-        var rns = new RomanNumber[] { null!, null! };
-        for (int i = 0; i < 2; i++)
+        string[] parts = expression.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+
+        if (parts.Length != 3)
         {
-            do
-            {
-                try
-                {
-                    Console.WriteLine(_resources.GetEnterNumberMessage());
-                    rns[i] = new RomanNumber(RomanNumber.Parse(Console.ReadLine()!));
-                }
-                catch
-                {
-                    Console.WriteLine(_resources.GetInvalidNumberMessage());
-                }
-            } while (rns[i] == null);
+            throw new ArgumentException(_resources.GetInvalidExpressionMessage());
         }
 
-        return rns;
+        var rn1 = new RomanNumber(RomanNumber.Parse(parts[0]));
+        var rn2 = new RomanNumber(RomanNumber.Parse(parts[2]));
+
+        return Calculate(rn1, parts[1], rn2);
     }
+
     /// <summary>
     /// Select language (culture) for user interface
     /// </summary>
-    private void SelectCulture()
+    public void SelectCulture()
     {
         string culture = null;
         do
@@ -62,7 +72,7 @@ public class Calc
                         _resources.Culture = "en-US";
                         break;
                     default:
-                        Console.WriteLine(_resources.GetInvalidCultureMessage());
+                        throw new ArgumentException(_resources.GetInvalidCultureMessage());
                         culture = null;
                         break;
                 }
@@ -78,18 +88,28 @@ public class Calc
     /// </summary>
     /// <param name="num1">first roman number</param>
     /// <param name="num2">second roman number</param>
-    private void Calculate(RomanNumber num1, RomanNumber num2)
+    public RomanNumber Calculate(RomanNumber num1, string op, RomanNumber num2)
     {
-        Console.WriteLine(_resources.GetEnterOperationMessage());
-        var operation = Console.ReadLine();
+        var operation = op;
+        RomanNumber res = null;
         switch (operation)
         {
             case "+":
-                Console.WriteLine(_resources.GetResultMessage(RomanNumber.Add(num1,num2)));
+                res = RomanNumber.Add(num1, num2);
+                break;
+            case "-":
+                res = RomanNumber.Subtract(num1, num2);
+                break;
+            case "*":
+                res = RomanNumber.Mult(num1, num2);
+                break;
+            case "/":
+                res = RomanNumber.Div(num1, num2);
                 break;
             default:
-                Console.WriteLine(_resources.GetInvalidOperationMessage());
-                break;
+                throw new ArgumentException(_resources.GetInvalidOperationMessage());
         }
+
+        return res;
     }
 }

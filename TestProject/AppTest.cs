@@ -15,6 +15,15 @@ public class AppTest
         Calc calc = new(Resources);
         Assert.IsNotNull(calc);
     }
+    
+    [TestMethod]
+    public void EvalExpressionTest()
+    {
+        Calc calc = new(Resources);
+        Assert.IsNotNull(calc.EvalExpression("XI + IV"));
+        Assert.AreEqual(new RomanNumber(10), calc.EvalExpression("XI - I"));
+        Assert.ThrowsException<ArgumentException>(() => calc.EvalExpression("2 + 3"));
+    }
 
     [TestMethod]
     public void RomanNUmberCtorTest()
@@ -23,7 +32,7 @@ public class AppTest
         Assert.IsNotNull(romanNumber);
         romanNumber = new(10);
         Assert.IsNotNull(romanNumber);
-        romanNumber = new(0);
+        romanNumber = new();
         Assert.IsNotNull(romanNumber);
     }
 
@@ -55,8 +64,6 @@ public class AppTest
     {
         // check if RomanNumber.Parse throws ArgumentException with "N" in argument string with more letters
         var exc = Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("NM"));
-        exc = Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("MN"));
-        exc = Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("MNM"));
 
         // check if RomanNumber.Parse throws ArgumentException with message "N is not allowed in context"
         var exp = new ArgumentException(Resources.GetMispalcedNMessage());
@@ -216,6 +223,11 @@ public class AppTest
 [TestClass]
 public class RomanNumberOperationTest
 {
+    private Resources Resources { get; set; } = new();
+    public RomanNumberOperationTest()
+    {
+        RomanNumber.Resources = Resources;
+    }
     [TestMethod]
     public void RomanNumberAddTest()
     {
@@ -236,11 +248,7 @@ public class RomanNumberOperationTest
         
         Assert.AreEqual(20, RomanNumber.Add(10,10).Value);
 
-        RomanNumber rn5  = RomanNumber.Add(2, 3);
-        RomanNumber rn8  = RomanNumber.Add(rn5, 3);
-        RomanNumber rn10 = RomanNumber.Add("I", "IX");
-        RomanNumber rn9  = RomanNumber.Add(rn5, "IV");
-        RomanNumber rn13 = RomanNumber.Add(rn5, rn8);
+       
         // check for exceptions using different combinations of types (RomanNumber, int, string)
         // check how it behaves if there mistakes in strings or nulls
         Assert.ThrowsException<ArgumentException>(() => RomanNumber.Add("X", "X X"));
@@ -265,10 +273,67 @@ public class RomanNumberOperationTest
         Assert.AreEqual("V",   rn.Add(-5).ToString());
         Assert.AreEqual("-XL", rn.Add("-L").ToString());
         // check for exceptions using different combinations of types (RomanNumber, int, string) and nulls
-        Assert.ThrowsException<ArgumentException>(()=> rn.Add(""));
+        Assert.ThrowsException<ArgumentNullException>(()=> rn.Add(""));
         Assert.ThrowsException<ArgumentException>(() => rn.Add("-"));
         Assert.ThrowsException<ArgumentException>(() => rn.Add("10"));
         Assert.ThrowsException<ArgumentNullException>(() => rn.Add((String)null!));
         Assert.ThrowsException<ArgumentNullException>(() => rn.Add((RomanNumber)null!));
     }
+
+    [TestMethod]
+    public void SubstractTest()
+    {
+        // test subtraction for different combinations of types (RomanNumber, int, string)
+        var rn = new RomanNumber(100);
+        Assert.AreEqual(5, rn.Subtract(95).Value);
+        Assert.AreEqual(90, rn.Subtract("X").Value);
+        Assert.AreEqual("CL", rn.Subtract(-50).ToString());
+        Assert.AreEqual("CL", rn.Subtract("-L").ToString());
+        // check for exceptions using different combinations of types (RomanNumber, int, string) and nulls
+        Assert.ThrowsException<ArgumentNullException>(()=> rn.Subtract(""));
+        Assert.ThrowsException<ArgumentException>(() => rn.Subtract("-"));
+        Assert.ThrowsException<ArgumentException>(() => rn.Subtract("10"));
+        Assert.ThrowsException<ArgumentNullException>(() => rn.Subtract((String)null!));
+        Assert.ThrowsException<ArgumentNullException>(() => rn.Subtract((RomanNumber)null!));
+    }
+
+    [TestMethod]
+    public void MultiplicationTest()
+    {
+        // test multiplication for different combinations of types (RomanNumber, int, string)
+        var rn = new RomanNumber(10);
+        Assert.AreEqual(100, rn.Mult(10).Value);
+        Assert.AreEqual(100, rn.Mult("X").Value);
+        Assert.AreEqual("-C", rn.Mult(-10).ToString());
+        Assert.AreEqual("-C", rn.Mult("-X").ToString());
+        // check for exceptions using different combinations of types (RomanNumber, int, string) and nulls
+        Assert.ThrowsException<ArgumentNullException>(() => rn.Mult(""));
+        Assert.ThrowsException<ArgumentException>(() => rn.Mult("-"));
+        Assert.ThrowsException<ArgumentException>(() => rn.Mult("10"));
+        Assert.ThrowsException<ArgumentNullException>(() => rn.Mult((String)null!));
+        Assert.ThrowsException<ArgumentNullException>(() => rn.Mult((RomanNumber)null!));
+    }
+
+    [TestMethod]
+    public void DivisionTest()
+    {
+        // test division for different combinations of types (RomanNumber, int, string)
+        var rn = new RomanNumber(100);
+        Assert.AreEqual(10, rn.Div(10).Value);
+        Assert.AreEqual(10, rn.Div("X").Value);
+        Assert.AreEqual("-X", rn.Div(-10).ToString());
+        Assert.AreEqual("-X", rn.Div("-X").ToString());
+        // check for zero division
+        Assert.ThrowsException<DivideByZeroException>(() => rn.Div(0));
+        Assert.ThrowsException<DivideByZeroException>(() => rn.Div("0"));
+        Assert.ThrowsException<DivideByZeroException>(() => rn.Div("N"));
+        // check for exceptions using different combinations of types (RomanNumber, int, string) and nulls
+        Assert.ThrowsException<ArgumentNullException>(() => rn.Div(""));
+        Assert.ThrowsException<ArgumentException>(() => rn.Div("-"));
+        Assert.ThrowsException<ArgumentException>(() => rn.Div("10"));
+        Assert.ThrowsException<ArgumentNullException>(() => rn.Div((String)null!));
+        Assert.ThrowsException<ArgumentNullException>(() => rn.Div((RomanNumber)null!));
+    }
+
+   
 }

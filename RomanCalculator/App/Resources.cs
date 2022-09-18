@@ -36,13 +36,21 @@ public class Resources
             "en-US" => "'N' is not allowed in this context",
             _ => throw new Exception("Unsupported culture")
         };
+    
+    public string GetInvalidExpressionMessage(string culture = null) // message for expression exception
+        => (culture ?? Culture) switch
+        {
+            "uk-UA" => "Вираз неприпустимий",
+            "en-US" => "Expression not allowed",
+            _ => throw new Exception("Unsupported culture")
+        };
 
 
     public string GetEnterNumberMessage(string culture = null) // message for user to enter number
         => (culture ?? Culture) switch
         {
-            "uk-UA" => "Введiть число: ",
-            "en-US" => "Enter number: ",
+            "uk-UA" => "Введiть вираз: ",
+            "en-US" => "Enter expression: ",
             _ => throw new Exception("Unsupported culture"),
         };
     
@@ -89,8 +97,8 @@ public class Resources
     public string GetCultureMessage(string culture = null) // message for culture
         => (culture ?? Culture) switch
         {
-            "uk-UA" => "Введiть мову: ",
-            "en-US" => "Enter language: ",
+            "uk-UA" => "Введiть мову (uk-UA), (en-US): ",
+            "en-US" => "Enter language (uk-UA), (en-US): ",
             _ => throw new Exception("Unsupported culture"),
         };
 
@@ -99,6 +107,14 @@ public class Resources
         {
             "uk-UA" => "Недозволена мова",
             "en-US" => "Invalid language",
+            _ => throw new Exception("Unsupported culture"),
+        };
+    
+    public string GetDivideByZeroMessage(string culture = null) // message for divide by zero
+        => (culture ?? Culture) switch
+        {
+            "uk-UA" => "Ділення на нуль неможливе",
+            "en-US" => "Division by zero is not allowed",
             _ => throw new Exception("Unsupported culture"),
         };
 }
